@@ -7,9 +7,9 @@ app.use(cors());
 app.use(express.json());
 
 const dbConfig = {
-    host: 'localhost',
-    user: 'root',
-    password: 'root',
+    host: '',
+    user: '',
+    password: '',
     database: 'waste_management_system'
 };
 
