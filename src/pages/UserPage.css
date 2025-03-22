@@ -1,0 +1,53 @@
+.user-container {
+    padding: 20px;
+    max-width: 600px;
+    margin: auto;
+    font-family: Arial, sans-serif;
+    text-align: center;
+  }
+  
+  .user-container h1 {
+    color: green;
+    margin-bottom: 20px;
+  }
+  
+  .billing-card {
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 20px;
+    background-color: #f9fff9;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .billing-card h2 {
+    margin-bottom: 15px;
+    color: #333;
+  }
+  
+  .billing-card p {
+    font-size: 16px;
+    margin: 8px 0;
+    color: #444;
+  }
+  
+  .request-btn {
+    margin-top: 20px;
+    padding: 12px 20px;
+    font-size: 16px;
+    background-color: green;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+  
+  .request-btn:hover {
+    background-color: darkgreen;
+  }
+  
+  .request-btn:disabled {
+    background-color: gray;
+    cursor: not-allowed;
+  }
+  

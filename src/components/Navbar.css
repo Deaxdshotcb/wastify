@@ -1,0 +1,64 @@
+/* Navbar Container */
+nav {
+    display: flex;
+    justify-content: space-between; /* Pushes content to edges */
+    align-items: center;
+    padding: 2px;
+    background-color: green;
+    width: 100%;
+}
+
+/* Navbar Branding (Wastify) */
+nav h1 {
+    color: white;
+    font-size: 30px;
+    margin: 5px;
+}
+
+/* Navbar Links */
+nav ul {
+    display: flex;
+    list-style: none;
+    gap: 20px;
+    padding: 0;
+    margin: 0;;
+}
+
+/* Navbar Items */
+nav ul li {
+    display: inline;
+    margin: 5px;
+}
+
+/* Navbar Links */
+nav ul li a {
+    text-decoration: none;
+    color: white;
+    font-size: 18px;
+    padding: 10px 15px;
+    transition: 0.3s ease-in-out;
+}
+
+/* Hover Effect */
+nav ul li a:hover {
+    background-color: darkgreen;
+    border-radius: 5px;
+    color: yellow;
+}
+
+/* 📱 Responsive Navbar */
+@media screen and (max-width: 768px) {
+    nav {
+        flex-direction: column; /* Keeps Wastify on left */
+        justify-content: space-between;
+        padding: 5px;
+    }
+
+    nav ul {
+        gap: 10px;
+    }
+
+    nav ul li a {
+        padding: 8px 10px;
+    }
+}

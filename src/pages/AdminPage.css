@@ -1,0 +1,46 @@
+.admin-container {
+    padding: 20px;
+    max-width: 1000px;
+    margin: auto;
+    font-family: Arial, sans-serif;
+  }
+  
+  .admin-container h1 {
+    text-align: center;
+    color: green;
+    margin-bottom: 20px;
+  }
+  
+  .admin-container h2 {
+    margin-top: 30px;
+    color: #333;
+  }
+  
+  .admin-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+  }
+  
+  .admin-table th, .admin-table td {
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: center;
+  }
+  
+  .admin-table th {
+    background-color: #f0f0f0;
+  }
+  
+  .admin-table input, .admin-table select {
+    width: 90%;
+    padding: 5px;
+    font-size: 14px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+  }
+  
+  .admin-table tr:hover {
+    background-color: #f9f9f9;
+  }
+  
