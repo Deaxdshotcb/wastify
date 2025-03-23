@@ -21,7 +21,8 @@ const AdminLogin = () => {
 
             if (response.data.success) {
                 localStorage.setItem("adminLoggedIn", true);
-                navigate('/admin-dashboard');
+                localStorage.setItem("adminId", adminId); // Store admin ID
+                navigate('/admin-dashboard'); // ✅ Redirect after login
             } else {
                 setError('Invalid admin ID or password');
             }

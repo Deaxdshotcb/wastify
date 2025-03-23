@@ -11,6 +11,7 @@ export const Login = () => {
         <Link to="/login/user" className="login-btn">User Login</Link>
         <Link to="/login/admin" className="login-btn">Admin Login</Link>
         <Link to="/login/signup" className="login-btn">Sign Up</Link>
+        <Link to="/login/worker" className="login-btn">Worker Login</Link>
       </div>
     </div>
   );

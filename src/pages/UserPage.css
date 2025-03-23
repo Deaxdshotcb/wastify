@@ -1,53 +1,98 @@
 .user-container {
-    padding: 20px;
-    max-width: 600px;
-    margin: auto;
-    font-family: Arial, sans-serif;
-    text-align: center;
+  padding: 30px;
+  max-width: 1000px;
+  margin: auto;
+  font-family: Arial, sans-serif;
+  text-align: center;
+}
+
+.user-container p {
+  max-width: 600px;
+  margin: 10px auto 25px;
+  text-align: center;
+  line-height: 1.5;
+}
+
+.user-container h1 {
+  color: green;
+  margin-bottom: 20px;
+}
+
+/* Billing history side by side */
+.billing-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}
+
+/* Billing history cards */
+.billing-card {
+  flex: 1;
+  min-width: 280px;
+  max-width: 320px;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  padding: 15px;
+  background-color: #f9fff9;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  text-align: left;
+}
+
+.billing-card h2 {
+  margin-bottom: 25px;
+  color: #333;
+  text-align: center;
+}
+
+.billing-card p {
+  font-size: 16px;
+  margin: 15px 0;
+  color: #444;
+}
+
+/* Request button */
+.request-btn {
+  margin-top: 20px;
+  padding: 12px 20px;
+  font-size: 16px;
+  background-color: green;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  width: 100%;
+}
+
+.request-btn:hover {
+  background-color: darkgreen;
+}
+
+.request-btn:disabled {
+  background-color: gray;
+  cursor: not-allowed;
+}
+
+.pay-btn {
+  margin-top: 10px;
+  padding: 10px 15px;
+  font-size: 16px;
+  background-color: #ff9800;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.pay-btn:hover {
+  background-color: #e68900;
+}
+/* Responsive layout */
+@media screen and (max-width: 768px) {
+  .billing-container {
+      flex-direction: column;
+      align-items: center;
   }
-  
-  .user-container h1 {
-    color: green;
-    margin-bottom: 20px;
-  }
-  
-  .billing-card {
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    padding: 20px;
-    background-color: #f9fff9;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  }
-  
-  .billing-card h2 {
-    margin-bottom: 15px;
-    color: #333;
-  }
-  
-  .billing-card p {
-    font-size: 16px;
-    margin: 8px 0;
-    color: #444;
-  }
-  
-  .request-btn {
-    margin-top: 20px;
-    padding: 12px 20px;
-    font-size: 16px;
-    background-color: green;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background 0.3s ease;
-  }
-  
-  .request-btn:hover {
-    background-color: darkgreen;
-  }
-  
-  .request-btn:disabled {
-    background-color: gray;
-    cursor: not-allowed;
-  }
-  
+}

@@ -1,103 +1,101 @@
-import React, { useState } from 'react';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
 import './AdminPage.css';
 
 const AdminPage = () => {
-  
-  const [houseData, setHouseData] = useState([
-    {
-      house_number: 101,
-      user_name: 'John Doe',
-      collection_request: true,
-      amount_paid: 500,
-      bill_no: 'B123',
-      billing_month: 'March'
-    },
-    {
-      house_number: 102,
-      user_name: 'Jane Smith',
-      collection_request: false,
-      amount_paid: 450,
-      bill_no: 'B124',
-      billing_month: 'March'
-    }
-  ]);
+  const [requests, setRequests] = useState([]);
+  const [billingHistory, setBillingHistory] = useState([]);
 
-  
-  const [financeData, setFinanceData] = useState([
-    {
-      month: 'March',
-      amount_received: 2000,
-      fuel_cost: 300,
-      labour_cost: 500,
-      transport_cost: 200
-    }
-  ]);
+  useEffect(() => {
+    // Fetch pending waste collection requests
+    axios.get("http://localhost:5000/admin/waste-requests")
+      .then(response => {
+        console.log("✅ Waste requests received:", response.data);
+        setRequests(response.data);
+      })
+      .catch(error => {
+        console.error("❌ Error fetching waste requests:", error.response ? error.response.data : error);
+      });
+
+    // Fetch billing history
+    axios.get("http://localhost:5000/admin/billing-history")
+      .then(response => {
+        console.log("✅ Billing history received:", response.data);
+        setBillingHistory(response.data);
+      })
+      .catch(error => {
+        console.error("❌ Error fetching billing history:", error);
+      });
+  }, []);
+
+  const handleApproveRequest = (requestId, userId) => {
+    axios.post("http://localhost:5000/admin/approve-request", { request_id: requestId, user_id: userId })
+      .then(response => {
+        console.log("✅ Request approved:", response.data);
+        alert("Waste collection approved and bill sent to the user!");
+        setRequests(prevRequests => prevRequests.filter(req => req.request_id !== requestId)); // Remove approved request
+      })
+      .catch(error => {
+        console.error("❌ Error approving request:", error);
+        alert("Failed to approve request.");
+      });
+  };
 
   return (
     <div className="admin-container">
       <h1>🏡 Admin Dashboard</h1>
 
-      <h2>House Details</h2>
+      {/* Pending Waste Collection Requests */}
+      <h2>Pending Waste Collection Requests</h2>
       <table className="admin-table">
         <thead>
           <tr>
             <th>House #</th>
             <th>User Name</th>
-            <th>Request</th>
-            <th>Amount Paid</th>
-            <th>Bill No</th>
-            <th>Month</th>
+            <th>Request Status</th>
+            <th>Action</th>
           </tr>
         </thead>
         <tbody>
-          {houseData.map((house, idx) => (
+          {requests.length > 0 ? requests.map((request, idx) => (
             <tr key={idx}>
-              <td>{house.house_number}</td>
-              <td><input value={house.user_name} /></td>
+              <td>{request.house_number}</td>
+              <td>{request.user_name}</td>
+              <td>{request.status}</td>
               <td>
-                <select defaultValue={house.collection_request ? 'Yes' : 'No'}>
-                  <option>Yes</option>
-                  <option>No</option>
-                </select>
+                <button onClick={() => handleApproveRequest(request.request_id, request.user_id)}>
+                  Approve ✅
+                </button>
               </td>
-              <td><input value={house.amount_paid} /></td>
-              <td><input value={house.bill_no} /></td>
-              <td>{house.billing_month}</td>
             </tr>
-          ))}
+          )) : <tr><td colSpan="4">No pending requests found.</td></tr>}
         </tbody>
       </table>
 
-      <h2>Monthly Finance Summary</h2>
+      {/* Billing History Section */}
+      <h2>Billing History</h2>
       <table className="admin-table">
         <thead>
           <tr>
-            <th>Month</th>
-            <th>Amount Received</th>
-            <th>Fuel Cost</th>
-            <th>Labour Cost</th>
-            <th>Transport Cost</th>
-            <th>Total Revenue</th>
-            <th>Total Profit</th>
+            <th>House #</th>
+            <th>User Name</th>
+            <th>Bill Date</th>
+            <th>Bill Number</th>
+            <th>Amount Due</th>
+            <th>Payment Status</th>
           </tr>
         </thead>
         <tbody>
-          {financeData.map((fin, idx) => {
-            const totalExpenses = fin.fuel_cost + fin.labour_cost + fin.transport_cost;
-            const revenue = fin.amount_received - totalExpenses;
-            const profit = revenue; 
-            return (
-              <tr key={idx}>
-                <td>{fin.month}</td>
-                <td><input value={fin.amount_received} /></td>
-                <td><input value={fin.fuel_cost} /></td>
-                <td><input value={fin.labour_cost} /></td>
-                <td><input value={fin.transport_cost} /></td>
-                <td>{revenue}</td>
-                <td>{profit}</td>
-              </tr>
-            );
-          })}
+          {billingHistory.length > 0 ? billingHistory.map((bill, idx) => (
+            <tr key={idx}>
+              <td>{bill.house_number}</td>
+              <td>{bill.user_name}</td>
+              <td>{bill.bill_date}</td>
+              <td>{bill.bill_no}</td>
+              <td>₹{bill.amount_due}</td>
+              <td>{bill.payment_status}</td>
+            </tr>
+          )) : <tr><td colSpan="6">No billing history available.</td></tr>}
         </tbody>
       </table>
     </div>
