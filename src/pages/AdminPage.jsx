@@ -1,49 +1,102 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
+import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
+import 'react-circular-progressbar/dist/styles.css';
 import './AdminPage.css';
 
 const AdminPage = () => {
   const [requests, setRequests] = useState([]);
   const [billingHistory, setBillingHistory] = useState([]);
+  const [totalWaste, setTotalWaste] = useState(0);
+  const [recyclableWaste, setRecyclableWaste] = useState(0);
+  const [totalAmount, setTotalAmount] = useState(0);
 
   useEffect(() => {
-    // Fetch pending waste collection requests
-    axios.get("http://localhost:5000/admin/waste-requests")
-      .then(response => {
-        console.log("✅ Waste requests received:", response.data);
-        setRequests(response.data);
-      })
-      .catch(error => {
-        console.error("❌ Error fetching waste requests:", error.response ? error.response.data : error);
-      });
+    const fetchWasteData = async () => {
+      try {
+        const response = await axios.get("http://localhost:5000/admin/waste-data");
+        console.log("✅ Waste data received:", response.data);
 
-    // Fetch billing history
-    axios.get("http://localhost:5000/admin/billing-history")
-      .then(response => {
-        console.log("✅ Billing history received:", response.data);
+        let wasteData = response.data;
+        let total = wasteData.reduce((sum, item) => sum + item.plastic_kg + item.electronic_kg + item.bio_kg, 0);
+        let recyclable = wasteData.reduce((sum, item) => sum + (item.recycle_percentage / 100) * total, 0);
+        let totalRs = wasteData.reduce((sum, item) => sum + item.amount, 0);
+
+        setTotalWaste(total);
+        setRecyclableWaste(recyclable);
+        setTotalAmount(totalRs);
+      } catch (error) {
+        console.error("❌ Error fetching waste data:", error);
+      }
+    };
+
+    const fetchRequests = async () => {
+      try {
+        const response = await axios.get("http://localhost:5000/admin/waste-requests");
+        setRequests(response.data);
+      } catch (error) {
+        console.error("❌ Error fetching requests:", error);
+      }
+    };
+
+    const fetchBillingHistory = async () => {
+      try {
+        const response = await axios.get("http://localhost:5000/admin/billing-history");
         setBillingHistory(response.data);
-      })
-      .catch(error => {
+      } catch (error) {
         console.error("❌ Error fetching billing history:", error);
-      });
+      }
+    };
+
+    fetchWasteData();
+    fetchRequests();
+    fetchBillingHistory();
   }, []);
 
-  const handleApproveRequest = (requestId, userId) => {
-    axios.post("http://localhost:5000/admin/approve-request", { request_id: requestId, user_id: userId })
-      .then(response => {
-        console.log("✅ Request approved:", response.data);
-        alert("Waste collection approved and bill sent to the user!");
-        setRequests(prevRequests => prevRequests.filter(req => req.request_id !== requestId)); // Remove approved request
-      })
-      .catch(error => {
-        console.error("❌ Error approving request:", error);
-        alert("Failed to approve request.");
-      });
+  const handleApproveRequest = async (requestId, userId) => {
+    try {
+      await axios.post("http://localhost:5000/admin/approve-request", { request_id: requestId, user_id: userId });
+      alert("✅ Waste collection approved and bill sent!");
+      setRequests(prev => prev.filter(req => req.request_id !== requestId));
+    } catch (error) {
+      alert("❌ Failed to approve request.");
+    }
   };
 
   return (
     <div className="admin-container">
       <h1>🏡 Admin Dashboard</h1>
+
+      {/* Waste Collection Overview */}
+      <div className="progress-container">
+        <div className="progress-item">
+          <h3>Total Waste Collected (kg)</h3>
+          <CircularProgressbar 
+            value={totalWaste} 
+            maxValue={Math.max(totalWaste, 1000)} 
+            text={`${totalWaste} kg`} 
+            styles={buildStyles({ textSize: '14px', pathColor: 'green', textColor: 'black' })} 
+          />
+        </div>
+        <div className="progress-item">
+          <h3>Recyclable Waste (kg)</h3>
+          <CircularProgressbar 
+            value={recyclableWaste} 
+            maxValue={Math.max(totalWaste, 1)} 
+            text={`${recyclableWaste.toFixed(2)} kg`} 
+            styles={buildStyles({ textSize: '14px', pathColor: 'orange', textColor: 'black' })} 
+          />
+        </div>
+        <div className="progress-item">
+          <h3>Amount Generated (₹)</h3>
+          <CircularProgressbar 
+            value={totalAmount} 
+            maxValue={Math.max(totalAmount, 50000)} 
+            text={`₹${totalAmount}`} 
+            styles={buildStyles({ textSize: '14px', pathColor: 'blue', textColor: 'black' })} 
+          />
+        </div>
+      </div>
 
       {/* Pending Waste Collection Requests */}
       <h2>Pending Waste Collection Requests</h2>

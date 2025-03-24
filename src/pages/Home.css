@@ -1,4 +1,3 @@
-
 *{
     margin: 0;
     padding: 0;
@@ -22,11 +21,9 @@
     transition: transform 0.3s ease-in-out;
 }
 
-
 .home-container img:hover {
     transform: scale(1.05);
 }
-
 
 .text {
     width: 45%;
@@ -36,13 +33,11 @@
     border-radius: 10px;
 }
 
-
 .text h1 {
     font-size: 35px;
     color: green;
     margin-bottom: 15px;
 }
-
 
 .text p {
     font-size: 18px;
@@ -51,19 +46,7 @@
     margin-bottom: 15px;
 }
 
-
-.text button {
-    width: 100%;
-    max-width: 200px;
-    height: 50px;
-    background-color: green;
-    font-size: 18px;
-    color: white;
-    border-radius: 10px;
-    border: none;
-    cursor: pointer;
-    transition: all 0.3s ease-in-out;
-}
+/* Updated button styling - removed duplicate styles */
 .login-button {
     display: inline-block;
     width: 100%;
@@ -83,17 +66,8 @@
 .login-button:hover {
     color: yellow;
     background-color: darkgreen;
-    transform: scale(1.00);
-}
-
-
-
-.text button:hover {
-    color: yellow;
-    background-color: darkgreen;
     transform: scale(1.05);
 }
-
 
 @media screen and (max-width: 1024px) {
     .home-container {
@@ -112,7 +86,7 @@
         text-align: center;
     }
 
-    .text button {
+    .login-button {
         width: 60%; 
     }
 }
@@ -140,7 +114,7 @@
         font-size: 16px;
     }
 
-    .text button {
+    .login-button {
         width: 80%; 
     }
 }

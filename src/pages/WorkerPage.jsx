@@ -77,7 +77,7 @@ const WorkerPage = () => {
               <td>{w.plastic_kg}</td>
               <td>{w.electronic_kg}</td>
               <td>{w.bio_kg}</td>
-              <td>{w.recycle_percentage.toFixed(2)}%</td>
+              <td>{w.recycle_percentage}%</td>
               <td>₹{w.amount}</td>
             </tr>
           ))}

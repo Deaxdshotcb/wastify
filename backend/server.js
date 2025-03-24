@@ -342,8 +342,41 @@ app.put('/api/billing/:id', (req, res) => {
     });
 });
 
+app.get("/admin/waste-summary", (req, res) => {
+    const query = `
+      SELECT 
+        SUM(plastic_kg + electronic_kg + bio_kg) AS total_waste,
+        SUM(recycle_percentage / 100 * (plastic_kg + electronic_kg + bio_kg)) AS total_recyclable,
+        SUM(amount) AS total_amount
+      FROM waste_data;
+    `;
+  
+    db.query(query, (err, results) => {
+      if (err) {
+        console.error("❌ Error fetching waste summary:", err);
+        res.status(500).json({ error: "Database error" });
+      } else {
+        res.json(results[0]); // Send summary data
+      }
+    });
+  });
+  app.get('/admin/waste-data', (req, res) => {
+    const query = `
+      SELECT 
+        SUM(plastic_kg + electronic_kg + bio_kg) AS total_waste,
+        SUM(recycle_percentage / 100 * (plastic_kg + electronic_kg + bio_kg)) AS total_recyclable,
+        SUM(amount) AS total_amount
+      FROM waste_data;
+    `;
 
-
+    db.query(query, (err, results) => {
+        if (err) {
+            console.error("❌ Error fetching waste data:", err);
+            return res.status(500).json({ message: "Database error" });
+        }
+        res.json(results[0]); // Send summary data as JSON
+    });
+});
 
 app.listen(5000, () => {
     console.log('Server running on port 5000');
