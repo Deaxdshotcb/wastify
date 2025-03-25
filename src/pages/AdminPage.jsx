@@ -17,13 +17,15 @@ const AdminPage = () => {
         const response = await axios.get("http://localhost:5000/admin/waste-data");
         console.log("✅ Waste data received:", response.data);
 
-        let wasteData = response.data;
-        let total = wasteData.reduce((sum, item) => sum + item.plastic_kg + item.electronic_kg + item.bio_kg, 0);
-        let recyclable = wasteData.reduce((sum, item) => sum + (item.recycle_percentage / 100) * total, 0);
-        let totalRs = wasteData.reduce((sum, item) => sum + item.amount, 0);
+        const totalWasteValue = response.data.total_waste || 0;
+        const recyclableKg = response.data.total_recyclable || 0;
+        const totalRs = response.data.total_amount || 0;
 
-        setTotalWaste(total);
-        setRecyclableWaste(recyclable);
+        // Convert recyclable waste from kg to percentage
+        const recyclablePercentage = totalWasteValue > 0 ? (recyclableKg / totalWasteValue) * 100 : 0;
+
+        setTotalWaste(totalWasteValue);
+        setRecyclableWaste(recyclablePercentage.toFixed(2)); // Convert to 2 decimal places
         setTotalAmount(totalRs);
       } catch (error) {
         console.error("❌ Error fetching waste data:", error);
@@ -79,11 +81,11 @@ const AdminPage = () => {
           />
         </div>
         <div className="progress-item">
-          <h3>Recyclable Waste (kg)</h3>
+          <h3>Recyclable Waste (%)</h3>
           <CircularProgressbar 
-            value={recyclableWaste} 
-            maxValue={Math.max(totalWaste, 1)} 
-            text={`${recyclableWaste.toFixed(2)} kg`} 
+            value={parseFloat(recyclableWaste)} 
+            maxValue={100} // Since it's a percentage, max is 100
+            text={`${recyclableWaste} %`} 
             styles={buildStyles({ textSize: '14px', pathColor: 'orange', textColor: 'black' })} 
           />
         </div>

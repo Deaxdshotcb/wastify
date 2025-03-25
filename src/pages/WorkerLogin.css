@@ -1,0 +1,92 @@
+.worker-login-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 50vh;
+    padding: 20px;
+    box-sizing: border-box;
+    text-align: center;
+    background-color: #f5f5f5;
+    border-radius: 10px;
+    width: 100%;
+    max-width: 400px;
+    margin: 50px auto 0 auto; /* Centering the container */
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.worker-login-container h2 {
+    font-size: 32px;
+    color: green;
+    margin-bottom: 15px;
+    font-weight: bold;
+}
+
+.worker-login-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centering items */
+    gap: 15px;
+    width: 100%;
+    max-width: 320px;
+}
+
+.worker-login-input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: border-color 0.3s ease;
+    text-align: center;
+}
+
+.worker-login-input:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+.worker-login-btn {
+    background-color: green;
+    color: white;
+    padding: 12px 25px;
+    text-decoration: none;
+    border-radius: 8px;
+    font-size: 18px;
+    font-weight: bold;
+    transition: all 0.3s ease-in-out;
+    text-align: center;
+    width: 100%;
+    max-width: 250px;
+    cursor: pointer;
+    box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.15);
+}
+
+.worker-login-btn:hover {
+    background-color: darkgreen;
+    color: yellow;
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.worker-login-btn:active {
+    transform: scale(0.98);
+}
+
+/* Center everything properly on smaller screens */
+@media screen and (max-width: 600px) {
+    .worker-login-container {
+        width: 90%;
+        padding: 15px;
+    }
+
+    .worker-login-container h2 {
+        font-size: 26px;
+    }
+
+    .worker-login-btn {
+        font-size: 16px;
+        padding: 10px 18px;
+        max-width: 220px;
+    }
+}

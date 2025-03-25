@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './Login.css';
+import './WorkerLogin.css';
 
 const WorkerLogin = () => {
   const [workerId, setWorkerId] = useState('');
@@ -32,26 +32,27 @@ const WorkerLogin = () => {
   };
 
   return (
-    <div className="login-container">
-      <h2>Worker Login</h2>
-      <form className="login-form" onSubmit={handleLogin}>
-        <input
-          type="text"
-          placeholder="Worker ID"
-          value={workerId}
-          onChange={(e) => setWorkerId(e.target.value)}
-          className="login-input"
-        />
-        <input
-          type="text"
-          placeholder="Worker Name"
-          value={workerName}
-          onChange={(e) => setWorkerName(e.target.value)}
-          className="login-input"
-        />
-        <button type="submit" className="login-btn">Login</button>
-      </form>
-    </div>
+    <div className="worker-login-container">
+  <h2>Worker Login</h2>
+  <form className="worker-login-form" onSubmit={handleLogin}>
+    <input
+      type="text"
+      placeholder="Worker ID"
+      value={workerId}
+      onChange={(e) => setWorkerId(e.target.value)}
+      className="worker-login-input"
+    />
+    <input
+      type="text"
+      placeholder="Worker Name"
+      value={workerName}
+      onChange={(e) => setWorkerName(e.target.value)}
+      className="worker-login-input"
+    />
+    <button type="submit" className="worker-login-btn">Login</button>
+  </form>
+</div>
+
   );
 };
 

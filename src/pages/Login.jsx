@@ -16,5 +16,3 @@ export const Login = () => {
     </div>
   );
 };
-
-
